@@ -2,8 +2,9 @@ import BaseWidget from 'widgets/BaseWidget';
 
 class Combobox extends BaseWidget {
 
-  constructor(valOrObject, callbackOrKey, options, image) {
+  constructor(valOrObject, callbackOrKey, options) {
     super();
+    console.log("MV: Combobox constructor called")
 
     var value = this._getInitialValue(valOrObject, callbackOrKey);
     var callback = this._getCheckCallback(valOrObject, callbackOrKey);
@@ -11,7 +12,6 @@ class Combobox extends BaseWidget {
     value = value !== undefined ? value : options[0];
 
     this.isArray = options.length !== undefined;
-    this.image = image;
 
     this.domSelect = document.createElement('select');
     this.domSelect.className = 'gui-select';
@@ -36,6 +36,7 @@ class Combobox extends BaseWidget {
       var opt = document.createElement('option');
       opt.innerHTML = options[keys[i]];
       opt.value = keys[i];
+      //opt.data-img = "abc.png"
       this.domSelect.appendChild(opt);
     }
   }
