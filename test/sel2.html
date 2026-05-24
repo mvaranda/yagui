@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dynamic Select</title>
+    <link rel="stylesheet" href="css/chosen.css">
+    <link rel="stylesheet" href="css/ImageSelect.css">
+</head>
+
+<body>
+
+    <p>Static select</p>
+    <select class="my-select">
+        <option data-img-src="images/image.png">Text 1</option> 
+        <option data-img-src="images/image.png">Text 2</option> 
+        <option data-img-src="images/image.png">Text 3</option> 
+        <option data-img-src="images/image.png">Text 4</option>
+        <option data-img-src="images/image.png">Text 5</option> 
+        <option data-img-src="images/image.png">Text 6</option> 
+        <option data-img-src="images/image.png">Text 7</option> 
+        <option data-img-src="images/image.png">Text 8</option> 
+    </select>
+
+    <p>Dynamic select</p>
+    <!-- <div id="selectContainer"> -->
+    <div id="my-container"></div>
+    </div>
+
+  <script src="lib/jquery.min.js" type="text/javascript"></script>
+  <script src="lib/chosen.jquery.js" type="text/javascript"></script>
+  <script src="lib/ImageSelect.jquery.js" type="text/javascript"></script>
+
+  <script type="text/javascript">
+
+
+    $(".my-select").chosen({width:"100%"});
+  
+        // List of image filenames and corresponding text
+        const items = [
+            { img: "image.png", text: "Item 1" },
+            { img: "image.png", text: "Item 2" },
+            { img: "image.png", text: "Item 3" }
+        ];
+
+function init() {
+        // Create a container for the select element
+        const container = document.getElementById("selectContainer");
+
+        // Create the select element
+        const select = document.createElement("select");
+        select.setAttribute('class', 'my-select');
+        //select.setAttribute('style', 'display: none;');
+
+        container.appendChild(select);
+
+        items.forEach((item, index) => {
+            // Create an option element and set its value to the index for later use
+            const option = document.createElement("option");
+            option.value = index;
+
+            // Create an image element
+            // const img = document.createElement("img");
+            // img.src = `images/${item.img}`; // Replace "images/" with your actual images folder path
+
+            // // Append the image to the option element
+            // option.appendChild(img);
+
+            option.setAttribute('data-img-src', `images/${item.img}`);
+
+            // Append the text as option's innerHTML
+            option.innerHTML += ` ${item.text}`;
+
+            // Append the option to the select element
+            select.appendChild(option);
+
+            // Check if the image is fully loaded and force repaint of affected elements
+            // if (img.complete) {
+            //     select.scrollIntoView({ block: "center", inline: "nearest" });
+            // } else {
+            //     img.addEventListener("load", () => {
+            //         select.scrollIntoView({ block: "center", inline: "nearest" });
+            //     });
+            // }
+        });
+    }
+// window.addEventListener("load", () => {
+//     setTimeout(() => {
+//         init();
+//     }, 100);
+// });
+// Function to create an option with image and text
+function createOption(text, imageSrc) {
+    const option = document.createElement("option");
+    const container = document.createElement("div");
+    container.classList.add("chosen-option-container");
+
+    // Create the image element
+    const img = document.createElement("img");
+    img.src = imageSrc;
+    img.alt = text;
+
+    img.width = 36;
+    img.height = 36;
+
+    container.appendChild(img);
+
+    // Create the text span
+    const span = document.createElement("span");
+    span.textContent = text;
+    container.appendChild(span);
+
+    option.appendChild(container);
+    return option;
+}
+
+// Function to create the dynamic <select> element with image and text options
+function createDynamicSelect() {
+    // Create a new <select> element
+    const select = document.createElement("select");
+    select.id = "mySelect";
+
+    // Add some options for demonstration purposes
+    for (let i = 1; i <= 5; i++) {
+        const optionText = `Option ${i}`;
+        //const imageSrc = `https://example.com/images/option${i}.png`;
+        const imageSrc = "images/image.png";
+        const option = createOption(optionText, imageSrc);
+        select.appendChild(option);
+    }
+
+    // Append the newly created <select> element to the container
+    const parentContainer = document.getElementById("my-container");
+    parentContainer.appendChild(select);
+}
+
+// Initialize Chosen after the DOM is ready and create the dynamic <select> element
+$(function() {
+    createDynamicSelect();
+
+    // Initialize Chosen for the newly created <select> element
+    $("#mySelect").chosen({ width: "100%" }).on("create", function(event, element) {
+        $(element).find(".chosen-option-container").show();
+    });
+
+    // Hover event to show the chosen-option-container for each option
+    $("#mySelect").on("mouseenter", "option", function(event) {
+        const option = $(event.currentTarget);
+        option.find(".chosen-option-container").show();
+    });
+
+    // Hover event to hide the chosen-option-container for each option
+    $("#mySelect").on("mouseleave", "option", function(event) {
+        const option = $(event.currentTarget);
+        option.find(".chosen-option-container").hide();
+    });
+});
+    </script>
+</body>
+</html>
