@@ -4,7 +4,6 @@ class Combobox extends BaseWidget {
 
   constructor(valOrObject, callbackOrKey, options) {
     super();
-    console.log("MV: Combobox constructor called")
 
     var value = this._getInitialValue(valOrObject, callbackOrKey);
     var callback = this._getCheckCallback(valOrObject, callbackOrKey);
@@ -30,13 +29,35 @@ class Combobox extends BaseWidget {
     this.setValue(ev.target.value);
   }
 
+/*
+
+Image options example:
+ex: options = { "options_array": [ {"text": "my text 1", "image": "my image 1"}, {"text": "my text 2", "image": "my image 2"} ]};
+
+for (let key in options.options_array) {
+    console.log(`Key: ${key}, Text: ${options.options_array[key].text}, Image: ${options.options_array[key].image}`);
+}
+
+*/
   addOptions(options) {
-    var keys = Object.keys(options);
-    for (var i = 0; i < keys.length; ++i) {
+    if (this.isArray) {
+      var keys = Object.keys(options);
+      for (var i = 0; i < keys.length; ++i) {
+        var opt = document.createElement('option');
+        opt.innerHTML = options[keys[i]];
+        opt.value = keys[i];
+        this.domSelect.appendChild(opt);
+      }
+      return;
+    }
+
+    // image Combobox
+    console.log("Image Combobox");
+    for (let key in options.options_array) {
+      console.log(`Key: ${key}, Text: ${options.options_array[key].text}, Image: ${options.options_array[key].image}`);
       var opt = document.createElement('option');
-      opt.innerHTML = options[keys[i]];
-      opt.value = keys[i];
-      //opt.data-img = "abc.png"
+      opt.innerHTML = `${options.options_array[key].text}`; //options[keys[i]];
+      opt.value = `${key}`; //keys[i];
       this.domSelect.appendChild(opt);
     }
   }

@@ -31,7 +31,7 @@ var topbar = main.addTopbar(); // top bar
 var menutopbar1 = topbar.addMenu('Named widgets'); // menu
 menutopbar1.addTitle('Title1');
 menutopbar1.addSlider('Slider' /*initValueOrObject, callbackOrKey, min, max, step*/ );
-menutopbar1.addCombobox('Combo' /*, initValueOrObject, callbackOrKey, options*/ );
+menutopbar1.addCombobox('Combo' , 0, null, ['aaa', 'bbb', 'ccc'] );
 menutopbar1.addCheckbox('Tick me' /*initValueOrObject, callbackOrKey */ );
 menutopbar1.addButton('A topbar button !' /*,callbackOrObject, key*/ );
 menutopbar1.addColor('Color' /*initValueOrObject, callbackOrKey */ , null, computeGradient);
@@ -39,7 +39,7 @@ menutopbar1.addColor('Color' /*initValueOrObject, callbackOrKey */ , null, compu
 var menutopbar2 = topbar.addMenu('Unnamed widgets'); // no margin if the widgets has no name + topbar
 menutopbar2.addTitle();
 menutopbar2.addSlider(null, null, null, -50, 50, 2);
-menutopbar2.addCombobox(null, null, null, ['one', 2, 'three']);
+menutopbar2.addCombobox(null, 1, null, ['one', 2, 'three']);
 menutopbar2.addColor(null, null, computeGradient);
 
 //////// RIGHT SIDEBAR /////////
@@ -48,6 +48,13 @@ var menuright1 = rightbar.addMenu('sidebar menu');
 menuright1.addTitle('Title 1');
 menuright1.addSlider('Slider');
 menuright1.addCombobox('Combo', 1, null, ['one', 2, 'three']);
+menuright1.addCombobox('Img Combo', 1, null, 
+  { "options_array": [ 
+      {"text": "option 1", "image": "image1.png"}, 
+      {"text": "option 2", "image": "image2.png"} 
+    ]
+  }
+);
 menuright1.addTitle('Title 2');
 menuright1.addCheckbox('Tick me');
 menuright1.addButton('One button !');
